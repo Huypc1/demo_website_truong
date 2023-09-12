@@ -1,0 +1,66 @@
+window.onload = () => {
+
+};
+function ready(callback){
+    if (document.readyState!='loading') callback();
+    else if (document.addEventListener) document.addEventListener('DOMContentLoaded', callback);
+    else document.attachEvent('onreadystatechange', function(){
+        if (document.readyState=='complete') callback();
+    });
+}
+ready(function(){
+	var scripts= document.getElementsByTagName('script');
+	var mysrc;
+	var crmid;
+	var name;
+	var email;
+	var phone;
+	var screen;
+	for (i=0;i<scripts.length;i++){
+		if(scripts[i].src.includes("https://cdn.fchat.vn/assets/embed/webchat.js")){
+			mysrc = scripts[i].src;
+			crmid = scripts[i].getAttribute('data-fchat-id');
+			name = scripts[i].getAttribute('data-fchat-name');
+			email = scripts[i].getAttribute('data-fchat-email');
+			phone = scripts[i].getAttribute('data-fchat-phone');
+			screen = scripts[i].getAttribute('data-screen');
+		}
+	  }
+	var url = new URL(mysrc);
+	var id = url.searchParams.get("id");
+
+	var node = document.createElement("chat-widget"); 
+	node.setAttribute("id", id);
+	if(crmid != null){
+		node.setAttribute("crmid", crmid);
+	}
+	if(name != null){
+		node.setAttribute("name", name);
+	}
+	if(email != null){
+		node.setAttribute("email", email);
+	}
+	if(phone != null){
+		node.setAttribute("phone", phone);
+	}
+	if(screen != null){
+		node.setAttribute("screen", screen);
+	}
+	document.body.appendChild(node);
+	includeJs("https://cdn.fchat.vn/assets/embed/app.js?version="+Date.now()+"");
+	includeCss("https://cdn.fchat.vn/assets/embed/css/fchat-webchat-icon-font.css");
+	includeCss("https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic");
+});
+function includeJs(jsFilePath) {
+    var js = document.createElement("script");
+    js.type = "text/javascript";
+    js.src = jsFilePath;
+    document.head.appendChild(js);
+}
+function includeCss(css) {
+    var js = document.createElement("link");
+    js.href = css;
+    js.rel = 'stylesheet';
+    js.type = 'text/css';
+    document.head.appendChild(js);
+}
