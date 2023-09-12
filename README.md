@@ -1,2 +1,0 @@
-# demo_website_truong
-demo_website_truong
